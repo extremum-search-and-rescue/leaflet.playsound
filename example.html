@@ -1,0 +1,42 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>PlaySound example</title>
+    <meta charset="utf-8" />
+    <!-- Include Leaflet -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
+
+    <!-- Include the plugin -->
+    <script src="./soundHandler.js"></script>
+</head>
+<body>
+    <div style="width:500px;height:500px" id="testMap"></div>
+    <script>
+        var openStreetMap = L.tileLayer('https://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+        });
+
+        var testMap = new L.Map('testMap', {
+            playSoundHandler: true,
+            playSound: {
+                crossOrigin: null,
+                soundsPathKind: "filesystem-relative",
+                soundsPath: "/../"
+            },
+            layers: [openStreetMap],
+            center: new L.LatLng(60, 30),
+            zoom: 13,
+        });
+        function play() {
+            testMap.fire('playsound', { audioName: 'example' });
+        }
+        function playMany() {
+            for (let i = 0; i < 100000; i++)
+                play();
+        }
+    </script>
+    <button onclick="play()">Play</button>
+    <button onclick="playMany()">Play x100000</button>
+</body>
+</html>
